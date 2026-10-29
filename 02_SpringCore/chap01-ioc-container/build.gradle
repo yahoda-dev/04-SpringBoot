@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.yahodadev'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:6.0.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    /*
+    SpringBoot 4.1에서 Spring Framework 7.0.8 이상을 요구한다.
+    - Spring Framework 7.x부터는 JAVA 17 이상을 요구한다.
+    */
+    implementation("org.springframework:spring-core:7.0.8")
+    implementation("org.springframework:spring-context:7.0.8")
+    implementation("org.springframework:spring-beans:7.0.8")
+    implementation("org.springframework:spring-expression:7.0.8")
+    implementation("org.springframework:spring-aop:7.0.8")
+}
+
+test {
+    useJUnitPlatform()
+}
