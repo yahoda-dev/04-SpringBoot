@@ -1,0 +1,15 @@
+# 스프링 부트의 어플리케이션 환경 설정 파일
+
+
+# 스프링 프레임워크 관련 설정
+spring:
+  # 어플리케이션 설정
+  application:
+    # 어플리케이션(아티팩트)의 이름
+    name: chap01-request-mapping
+  thymeleaf:
+    cache: false
+
+#내장 톰캣 관련 설정
+server:
+  port: 8081
