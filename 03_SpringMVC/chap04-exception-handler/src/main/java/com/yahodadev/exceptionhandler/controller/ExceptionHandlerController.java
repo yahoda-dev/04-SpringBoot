@@ -1,6 +1,8 @@
 package com.yahodadev.exceptionhandler.controller;
 
+import com.yahodadev.exceptionhandler.exception.MemberRegistException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,6 +20,27 @@ public class ExceptionHandlerController {
     public String nullPointerExceptionHandler(NullPointerException excpetion) { // Exception 객체 받아오기
         System.out.println("Controller 레벨의 Exception 처리!");
         return "error/nullPointer"; // NPE 발생 시 이동시킬 View
+    }
+
+    @GetMapping("/controller-user")
+    // 복습: 메서드에서 throw를 하면 해당 메서드를 호출한 곳에서 처리해야 한다
+    public String userException() throws MemberRegistException{
+        boolean check = true;
+
+        if(check) {
+            throw new MemberRegistException("당신은 우리 서비스의 회원이 될 수 없습니다.");
+        }
+
+        return "/";
+    }
+
+
+
+    @ExceptionHandler(MemberRegistException.class)
+    public String registExceptionHandler(Model model, MemberRegistException exception) {
+        System.out.println("Member Regist Exception 처리!");
+        model.addAttribute("exception", exception);
+        return "error/memberRegist";
     }
 
 }
