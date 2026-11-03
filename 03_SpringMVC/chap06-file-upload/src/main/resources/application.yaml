@@ -1,3 +1,15 @@
 spring:
   application:
     name: chap06-file-upload
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+
+file:
+  upload:
+    windows:
+      path: C:/bear/uploadedFiles
+    mac:
+      path: /myWs/uploadedFiles
