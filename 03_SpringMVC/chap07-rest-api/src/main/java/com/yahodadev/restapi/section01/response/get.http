@@ -1,0 +1,24 @@
+### GET response/hello
+GET http://localhost:8080/response/hello
+
+### GET response/random
+GET http://localhost:8080/response/random
+
+### GET response/message
+GET http://localhost:8080/response/message
+
+### GET response/list
+GET http://localhost:8080/response/list
+
+### GET response/map
+GET http://localhost:8080/response/map
+
+### GET response/entity
+GET http://localhost:8080/response/entity
+
+
+### 전체 유저 조회
+GET http://localhost:8080/entity/users
+
+### 단일 유저 조회
+GET http://localhost:8080/entity/users/1
