@@ -8,6 +8,11 @@
 <!--        <class>com.bear.section01.entity.Member</class>-->
 <!--        <class>com.bear.section02.enum_type.Member</class>-->
         <class>com.bear.section03.field.Member</class>
+        <class>com.bear.practice.ColumnMember</class>
+        <class>com.bear.practice.EntityNameMember</class>
+        <class>com.bear.practice.IdentityMember</class>
+        <class>com.bear.practice.EnumMember</class>
+        <class>com.bear.practice.PropertyAccessMember</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -25,7 +30,7 @@
                 "update": 기존 테이블을 유지한채 변경된 부분(컬럼 추가)만 반영
                 "validate": DDL 실행을 하지 않고 구조가 맞는지 검증만 진행
              -->
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
 
     </persistence-unit>
