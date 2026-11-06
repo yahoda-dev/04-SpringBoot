@@ -1,6 +1,7 @@
 package com.yahodadev.jpaintro.dto;
 
 
+import com.yahodadev.jpaintro.entity.Category;
 import lombok.*;
 
 @Getter

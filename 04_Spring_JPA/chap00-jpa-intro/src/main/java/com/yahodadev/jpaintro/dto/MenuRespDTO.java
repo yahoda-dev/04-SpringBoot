@@ -8,8 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MenuRespDTO {
     private Integer menuCode;
     private String menuName;
@@ -19,7 +19,7 @@ public class MenuRespDTO {
 
     public static MenuRespDTO from(Menu menu) {
         return new MenuRespDTO(
-                menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), menu.getCategoryCode(), menu.getOrderableStatus()
+                menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), menu.getCategory().getCategoryCode(), menu.getOrderableStatus()
         );
     }
 }

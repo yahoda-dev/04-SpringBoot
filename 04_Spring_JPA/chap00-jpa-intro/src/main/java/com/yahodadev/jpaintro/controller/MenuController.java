@@ -17,14 +17,22 @@ public class MenuController {
     private final MenuService menuService;
 
     // 전체 조회
-    @GetMapping("/users")
+    @GetMapping
     public List<MenuRespDTO> findAllUsers() {
         return menuService.findAllUsers();
     }
 
     // 회원 가입
-    @PostMapping("/users")
+    @PostMapping
     public MenuRespDTO createUser(@RequestBody MenuReqDTO request) {
         return menuService.createUser(request);
+    }
+
+    @PutMapping("/{menucode}")
+    public MenuRespDTO update(
+            @PathVariable Integer menucode,
+            @RequestBody MenuRespDTO request
+    ) {
+        return menuService.update(menucode, request);
     }
 }
