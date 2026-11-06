@@ -7,11 +7,13 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity(name = "practice_column_member")
 @Table(name = "tbl_practice_column_member")
 @Getter
 @Setter
+@ToString
 public class ColumnMember {
 
     @Id
