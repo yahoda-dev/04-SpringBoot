@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: study-board
+  datasource:
+    url: jdbc:mysql://localhost:3306/study_board
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    # OSIV(Open Session In View)
+    # HTTP 응답을 다 만들때까지 영속성 컨텍스트와 DB 커넥션을 유지 (On일경우)
+    # 트랜젝션 밖에서 LAZY 필드에 접근하면  LazyInitializationException이 발생!
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs            # OpenAPI JSON 문서 경로
+    groups:
+      enabled: true               # API 그룹화 기능 활성화
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html        # Swagger UI 접속 경로
+    tags-sorter: alpha            # 태그 정렬 기준
+    operations-sorter: alpha      # API 메서드 정렬 기준
+    doc-expansion: none           # 기본 펼침 방식
+    display-request-duration: true # 실행 소요 시간 표시
+    filter: true                  # 상단 검색 필터 활성화
+    disable-swagger-default-url: true # 샘플 URL 비활성화
