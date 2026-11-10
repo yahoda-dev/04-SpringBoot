@@ -4,15 +4,16 @@ package com.yahodadev.studyboard.post.controller;
 import com.yahodadev.studyboard.common.dto.ApiResponse;
 import com.yahodadev.studyboard.common.dto.PageResponseDTO;
 import com.yahodadev.studyboard.post.dto.PostListItemResponseDTO;
+import com.yahodadev.studyboard.post.dto.PostRequestDTO;
+import com.yahodadev.studyboard.post.dto.PostRespDTO;
+import com.yahodadev.studyboard.post.entity.Post;
 import com.yahodadev.studyboard.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/posts/*")
@@ -31,5 +32,21 @@ public class PostController {
                 "게시물 목록 조회 완료",
                 postPage
         ));
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<?>> submit(
+            @RequestBody PostRequestDTO request
+    ) {
+        Post post = postService.submit(request);
+        PostRespDTO resp = PostRespDTO.from(post);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.CREATED,
+                        "포스트 등록이 완료되었습니다.",
+                        resp
+                )
+        );
     }
 }

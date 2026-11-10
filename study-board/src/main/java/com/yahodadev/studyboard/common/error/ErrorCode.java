@@ -14,6 +14,7 @@ public enum ErrorCode {
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 요청을 처리하지 못 했습니다."),
     INVALID_INPUT(HttpStatus.BAD_REQUEST, "요청 입력을 확인해 주세요."),
     LOGIN_FAILED(HttpStatus.UNAUTHORIZED, "로그인 실패."),
+    INVALID_CATEGORY_NUMBER(HttpStatus.BAD_REQUEST, "카테고리 조회 실패."),
     MEMBER_WITHDRAWN(HttpStatus.CONFLICT, "탈퇴한 회원입니다.");
 
     private final HttpStatus status;

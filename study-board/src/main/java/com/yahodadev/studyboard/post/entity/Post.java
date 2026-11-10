@@ -48,4 +48,13 @@ public class Post {
     @Column(name = "updated_at",
             nullable = false)
     private LocalDateTime updatedAt;
+
+    public Post(Member author, Category category, String title, String body, String referenceUrl, LocalDateTime createdAt) {
+        this.author = author;
+        this.category = category;
+        this.title = title;
+        this.body = body;
+        this.referenceUrl = referenceUrl;
+        this.createdAt = createdAt;
+    }
 }
