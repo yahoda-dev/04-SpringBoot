@@ -35,7 +35,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<?>> submit(
+    public ResponseEntity<ApiResponse<PostRespDTO>> submit(
             @RequestBody PostRequestDTO request
     ) {
         Post post = postService.submit(request);
@@ -49,4 +49,20 @@ public class PostController {
                 )
         );
     }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<ApiResponse<PostRespDTO>> getById(
+            @PathVariable Long postId
+    ) {
+        PostRespDTO resp = postService.getById(postId);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.CREATED,
+                        "포스트 조회가 완료되었습니다.",
+                        resp
+                )
+        );
+    }
+
 }

@@ -9,6 +9,7 @@ import com.yahodadev.studyboard.member.entity.Member;
 import com.yahodadev.studyboard.member.repository.MemberRepository;
 import com.yahodadev.studyboard.post.dto.PostListItemResponseDTO;
 import com.yahodadev.studyboard.post.dto.PostRequestDTO;
+import com.yahodadev.studyboard.post.dto.PostRespDTO;
 import com.yahodadev.studyboard.post.entity.Post;
 import com.yahodadev.studyboard.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
@@ -60,5 +62,12 @@ public class PostService {
         );
 
         return postRepository.save(post);
+    }
+
+    public PostRespDTO getById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+
+        return PostRespDTO.from(post);
     }
 }
