@@ -2,9 +2,11 @@ package com.yahodadev.studyboard.category.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @Table(name = "categories")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
