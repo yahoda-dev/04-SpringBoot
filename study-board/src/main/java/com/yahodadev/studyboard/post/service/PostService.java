@@ -30,7 +30,23 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final CategoryRepository categoryRepository;
 
-    @Transactional
+
+    private Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+    }
+
+    private Member getMemberById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_USER_NUMBER));
+    }
+
+    private Category getCategoryById(Long id) {
+        return categoryRepository.findById(id).orElseThrow(
+                () -> new BusinessException(ErrorCode.INVALID_CATEGORY_NUMBER));
+    }
+
+
     public PageResponseDTO<PostListItemResponseDTO> findPosts(Pageable pageable) {
         Pageable pageRequest = PageRequest.of(
                 pageable.getPageNumber(),
@@ -44,13 +60,9 @@ public class PostService {
 
 
     public Post submit(PostRequestDTO request) {
-        Member member = memberRepository.findById(request.getAuthorId()).orElseThrow(
-                () -> new BusinessException(ErrorCode.INVALID_USER_NUMBER)
-        );
+        Member member = getMemberById(request.getAuthorId());
+        Category category = getCategoryById(request.getCategoryId());
 
-        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(
-                () -> new BusinessException(ErrorCode.INVALID_CATEGORY_NUMBER)
-        );
 
         Post post = new Post(
                 member,
@@ -64,10 +76,25 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    @Transactional(readOnly = true)
     public PostRespDTO getById(Long postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
-
+        Post post = getPostById(postId);
         return PostRespDTO.from(post);
+    }
+
+    public PostRespDTO modfiy(Long postId, PostRequestDTO request) {
+        Post post = getPostById(postId);
+        Category category = getCategoryById(request.getCategoryId());
+
+        postRepository.modify(
+                postId,
+                request.getTitle(),
+                request.getBody(),
+                category,
+                LocalDateTime.now());
+
+        Post modifyPost = getPostById(postId);
+
+        return PostRespDTO.from(modifyPost);
     }
 }

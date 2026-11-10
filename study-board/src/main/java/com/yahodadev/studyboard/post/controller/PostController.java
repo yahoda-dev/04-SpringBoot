@@ -65,4 +65,19 @@ public class PostController {
         );
     }
 
+    @PatchMapping("/{postId}")
+    public ResponseEntity<ApiResponse<PostRespDTO>> modify(
+            @PathVariable Long postId,
+            @RequestBody PostRequestDTO request
+    ) {
+        PostRespDTO resp = postService.modfiy(postId, request);
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.CREATED,
+                        "포스트 수정이 완료되었습니다.",
+                        resp
+                )
+        );
+    }
+
 }

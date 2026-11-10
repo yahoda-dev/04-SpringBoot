@@ -1,5 +1,6 @@
 package com.yahodadev.studyboard.post.repository;
 
+import com.yahodadev.studyboard.category.entity.Category;
 import com.yahodadev.studyboard.post.dto.PostListItemResponseDTO;
 import com.yahodadev.studyboard.post.dto.PostRequestDTO;
 import com.yahodadev.studyboard.post.entity.Post;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDateTime;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -21,4 +24,15 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             join post.author author
             """)
     Page<PostListItemResponseDTO> findPostPage(Pageable pageRequest);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("""
+            UPDATE Post post
+            SET post.title = :title,
+                post.body = :body,
+                post.category = :category,
+                post.updatedAt = :updatedAt
+            WHERE post.id = :postId          
+            """)
+    void modify(Long postId, String title, String body, Category category, LocalDateTime updatedAt);
 }
