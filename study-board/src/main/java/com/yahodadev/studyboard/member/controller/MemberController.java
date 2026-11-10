@@ -7,10 +7,7 @@ import com.yahodadev.studyboard.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/members/*")
@@ -29,6 +26,34 @@ public class MemberController {
                 .body(ApiResponse.of(HttpStatus.CREATED, "회원 가입 성공", resp));
     }
 
-    /// 로그인
+    @PatchMapping("/{memberId}")
+    public ResponseEntity<ApiResponse<?>> modify(
+            @PathVariable Long memberId,
+            @RequestBody RegistMemberRequestDTO request
+    ) {
+        MemberAccountResponseDTO resp = memberService.update(memberId, request);
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "회원 수정 성공",
+                        resp
+                )
+        );
+    }
+
+    @PostMapping("/{memberId}/withdrawal")
+    public ResponseEntity<ApiResponse<?>> withdraw(
+            @PathVariable Long memberId,
+            @RequestBody String password
+    ) {
+        MemberAccountResponseDTO resp = memberService.withdraw(memberId, password);
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "회원 탈퇴 성공",
+                        resp
+                )
+        );
+    }
 
 }
