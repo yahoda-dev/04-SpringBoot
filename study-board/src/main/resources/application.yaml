@@ -5,6 +5,9 @@ spring:
     url: jdbc:mysql://localhost:3306/study_board
     username: root
     password: 1234
+  devtools:
+    restart:
+      enabled: false
 
   jpa:
     hibernate:

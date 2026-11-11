@@ -46,4 +46,11 @@ public class Comment {
         this.studyPost = studyPost;
         this.body = body;
     }
+
+    public Comment(Post studyPost, Member author, String body, LocalDateTime createdAt) {
+        this.studyPost = studyPost;
+        this.author = author;
+        this.body = body;
+        this.createdAt = createdAt;
+    }
 }
