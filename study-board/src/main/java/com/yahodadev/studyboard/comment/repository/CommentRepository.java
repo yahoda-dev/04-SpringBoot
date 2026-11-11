@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
@@ -30,4 +31,11 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
                 where comment.studyPost.id = :postId
             """)
     Page<CommentRespDTO> findCommentPage(Long postId, Pageable pageRequest);
+
+    @Query("""
+        SELECT comment
+        FROM Comment  comment
+        WHERE comment.parent.id = :parentId
+        """)
+    List<Comment> findAllTestComments(Long parentId);
 }

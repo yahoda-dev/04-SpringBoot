@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -108,5 +110,22 @@ public class CommentService {
         Page<CommentRespDTO> comments = commentRepository.findCommentPage(postId, pageRequest);
 
         return PageResponseDTO.from(comments);
+    }
+
+
+
+    public CommentRespDTO findAllTestCommnets(Long commentId) {
+        Comment comment = getCommentById(commentId);
+        List<Comment> testComments = commentRepository.findAllTestComments(comment.getId());
+        List<String> testCommentsToString = new ArrayList<>();
+        CommentRespDTO result = CommentRespDTO.from(comment);
+
+        for (Comment comm : testComments) {
+            testCommentsToString.add(comm.getBody());
+        }
+
+        result.setTestComments(testCommentsToString);
+
+        return result;
     }
 }

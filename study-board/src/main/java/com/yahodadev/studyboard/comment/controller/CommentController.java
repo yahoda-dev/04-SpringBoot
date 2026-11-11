@@ -104,5 +104,19 @@ public class CommentController {
         );
     }
 
+    @GetMapping("/comments/{commentId}")
+    public ResponseEntity<ApiResponse<?>> findAllTestCommnets(@PathVariable Long commentId) {
+        CommentRespDTO result = commentService.findAllTestCommnets(commentId);
+
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "댓글 조회가 완료되었습니다.",
+                        result
+                )
+        );
+    }
+
 
 }
