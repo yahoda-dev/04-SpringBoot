@@ -5,6 +5,7 @@ import com.yahodadev.studyboard.comment.dto.CommentReqDTO;
 import com.yahodadev.studyboard.comment.dto.CommentRespDTO;
 import com.yahodadev.studyboard.comment.service.CommentService;
 import com.yahodadev.studyboard.common.dto.ApiResponse;
+import com.yahodadev.studyboard.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class CommentController {
     ) {
         HttpStatus status;
 
-        if(!commentService.delete(commentId)) {
+        if (!commentService.delete(commentId)) {
             status = HttpStatus.NO_CONTENT;
         } else {
             status = HttpStatus.REQUEST_TIMEOUT;
@@ -46,6 +47,22 @@ public class CommentController {
 
 
         return ResponseEntity.status(status).build();
+    }
+
+    @PatchMapping("/comments/{commentId}")
+    public ResponseEntity<ApiResponse<?>> modify(
+            @PathVariable Long commentId,
+            @RequestBody CommentReqDTO request
+    ) {
+        CommentRespDTO resp = commentService.modify(commentId, request);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "댓글 수정이 완료되었습니다.",
+                        resp
+                )
+        );
     }
 
 
