@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // Repository의 마지막 인자로 Pageable 객체를 넘기면 SpringData가 Paging 처리를 해준다.
     @Query(value = """
             select new com.yahodadev.studyboard.post.dto.PostListItemResponseDTO(
-                        post.title, author.nickName, post.createdAt
+                        author.nickName, post.title, post.createdAt
             )
             from Post post
             join post.author author
