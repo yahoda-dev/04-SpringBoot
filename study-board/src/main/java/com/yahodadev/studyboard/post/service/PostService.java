@@ -47,6 +47,7 @@ public class PostService {
     }
 
 
+    @Transactional(readOnly = true)
     public PageResponseDTO<PostListItemResponseDTO> findPosts(Pageable pageable) {
         Pageable pageRequest = PageRequest.of(
                 pageable.getPageNumber(),
@@ -59,7 +60,7 @@ public class PostService {
     }
 
 
-    public Post submit(PostRequestDTO request) {
+    public PostRespDTO submit(PostRequestDTO request) {
         Member member = getMemberById(request.getAuthorId());
         Category category = getCategoryById(request.getCategoryId());
 
@@ -72,8 +73,7 @@ public class PostService {
                 request.getReferenceUrl(),
                 LocalDateTime.now()
         );
-
-        return postRepository.save(post);
+        return PostRespDTO.from(postRepository.save(post));
     }
 
     @Transactional(readOnly = true)

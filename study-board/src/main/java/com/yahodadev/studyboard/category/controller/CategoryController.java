@@ -23,13 +23,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<CategoryRespDTO>>> getCategoryList() {
-        List<Category> categories = categoryService.getCategoryList();
-        List<CategoryRespDTO> resp = new ArrayList<>();
-
-        for (Category category : categories) {
-            resp.add(CategoryRespDTO.from(category));
-        }
-
+        List<CategoryRespDTO> resp =categoryService.getCategoryList();
 
         return ResponseEntity.ok().body(
                 ApiResponse.of(

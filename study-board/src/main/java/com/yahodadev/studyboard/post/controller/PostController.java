@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/posts/*")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
@@ -38,8 +38,7 @@ public class PostController {
     public ResponseEntity<ApiResponse<PostRespDTO>> submit(
             @RequestBody PostRequestDTO request
     ) {
-        Post post = postService.submit(request);
-        PostRespDTO resp = PostRespDTO.from(post);
+        PostRespDTO resp = postService.submit(request);
 
         return ResponseEntity.ok().body(
                 ApiResponse.of(

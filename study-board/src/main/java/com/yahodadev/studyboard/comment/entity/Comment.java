@@ -42,6 +42,10 @@ public class Comment {
             nullable = false)
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
+
     public Comment(Post studyPost, String body) {
         this.studyPost = studyPost;
         this.body = body;
@@ -52,5 +56,13 @@ public class Comment {
         this.author = author;
         this.body = body;
         this.createdAt = createdAt;
+    }
+
+    public Comment(Post studyPost, Member author, String body, LocalDateTime createdAt, Comment parent) {
+        this.studyPost = studyPost;
+        this.author = author;
+        this.body = body;
+        this.createdAt = createdAt;
+        this.parent = parent;
     }
 }

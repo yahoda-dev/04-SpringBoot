@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +18,13 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<Category> getCategoryList() {
-        return categoryRepository.findAll().stream().toList();
+    public List<CategoryRespDTO> getCategoryList() {
+        List<Category> categories = categoryRepository.findAll().stream().toList();
+        List<CategoryRespDTO> result = new ArrayList<>();
+        for (Category category : categories) {
+            result.add(CategoryRespDTO.from(category));
+        }
+
+        return result;
     }
 }

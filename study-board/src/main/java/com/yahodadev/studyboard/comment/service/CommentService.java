@@ -3,6 +3,7 @@ package com.yahodadev.studyboard.comment.service;
 
 import com.yahodadev.studyboard.comment.dto.CommentReqDTO;
 import com.yahodadev.studyboard.comment.dto.CommentRespDTO;
+import com.yahodadev.studyboard.comment.dto.TestCommentRespDTO;
 import com.yahodadev.studyboard.comment.entity.Comment;
 import com.yahodadev.studyboard.comment.repository.CommentRepository;
 import com.yahodadev.studyboard.common.dto.PageResponseDTO;
@@ -50,7 +51,7 @@ public class CommentService {
     }
 
 
-    public Comment submit(Long postId, CommentReqDTO request) {
+    public CommentRespDTO submit(Long postId, CommentReqDTO request) {
         Post post = getPostById(postId);
         Member member = getMemberById(request.getAuthorId());
 
@@ -61,7 +62,23 @@ public class CommentService {
                 LocalDateTime.now()
         );
 
-        return commentRepository.save(comment);
+        return CommentRespDTO.from(commentRepository.save(comment));
+    }
+
+    public TestCommentRespDTO testSubmit(Long postId, Long commentId, CommentReqDTO request) {
+        Post post = getPostById(postId);
+        Member member = getMemberById(request.getAuthorId());
+        Comment parentComment = getCommentById(commentId);
+
+        Comment comment = new Comment(
+                post,
+                member,
+                request.getBody(),
+                LocalDateTime.now(),
+                parentComment
+        );
+
+        return TestCommentRespDTO.from(commentRepository.save(comment));
     }
 
     public boolean delete(Long commentId) {
@@ -70,7 +87,6 @@ public class CommentService {
         commentRepository.flush();
 
         return commentRepository.existsById(commentId);
-
     }
 
     public CommentRespDTO modify(Long commentId, CommentReqDTO request) {

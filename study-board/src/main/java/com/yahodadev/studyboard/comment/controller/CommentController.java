@@ -3,6 +3,7 @@ package com.yahodadev.studyboard.comment.controller;
 
 import com.yahodadev.studyboard.comment.dto.CommentReqDTO;
 import com.yahodadev.studyboard.comment.dto.CommentRespDTO;
+import com.yahodadev.studyboard.comment.dto.TestCommentRespDTO;
 import com.yahodadev.studyboard.comment.service.CommentService;
 import com.yahodadev.studyboard.common.dto.ApiResponse;
 import com.yahodadev.studyboard.common.dto.PageResponseDTO;
@@ -25,7 +26,7 @@ public class CommentController {
             @PathVariable Long postId,
             @RequestBody CommentReqDTO request
     ) {
-        CommentRespDTO resp = CommentRespDTO.from(commentService.submit(postId, request));
+        CommentRespDTO resp = commentService.submit(postId, request);
 
         return ResponseEntity.ok().body(
                 ApiResponse.of(
@@ -36,11 +37,29 @@ public class CommentController {
         );
     }
 
+    @PostMapping("/posts/{postId}/comments/{commentId}/test")
+    public ResponseEntity<ApiResponse<?>> testSubmit(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @RequestBody CommentReqDTO request
+    ) {
+        TestCommentRespDTO resp = commentService.testSubmit(postId, commentId, request);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "댓글이 등록되었습니다.",
+                        resp
+                )
+        );
+    }
+
+
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<ApiResponse<PageResponseDTO<?>>> findComments(
             @PathVariable Long postId,
-            @PageableDefault(size = 10)Pageable pageable
-            ) {
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
 
         PageResponseDTO<CommentRespDTO> commentPage = commentService.findComments(postId, pageable);
 
