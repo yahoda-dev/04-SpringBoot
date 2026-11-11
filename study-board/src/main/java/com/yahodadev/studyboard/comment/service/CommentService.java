@@ -39,6 +39,11 @@ public class CommentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_USER_NUMBER));
     }
 
+    private Comment getCommentBtId(Long id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+    }
+
 
 
     public Comment submit(Long postId, CommentReqDTO request) {
@@ -55,4 +60,12 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    public boolean delete(Long commentId) {
+        Comment comment = getCommentBtId(commentId);
+        commentRepository.delete(comment);
+        commentRepository.flush();
+
+        return commentRepository.existsById(commentId);
+
+    }
 }

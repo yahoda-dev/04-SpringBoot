@@ -32,5 +32,21 @@ public class CommentController {
         );
     }
 
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<ApiResponse<?>> delete(
+            @PathVariable Long commentId
+    ) {
+        HttpStatus status;
+
+        if(!commentService.delete(commentId)) {
+            status = HttpStatus.NO_CONTENT;
+        } else {
+            status = HttpStatus.REQUEST_TIMEOUT;
+        }
+
+
+        return ResponseEntity.status(status).build();
+    }
+
 
 }
