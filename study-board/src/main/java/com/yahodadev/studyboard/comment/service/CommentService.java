@@ -5,6 +5,7 @@ import com.yahodadev.studyboard.comment.dto.CommentReqDTO;
 import com.yahodadev.studyboard.comment.dto.CommentRespDTO;
 import com.yahodadev.studyboard.comment.entity.Comment;
 import com.yahodadev.studyboard.comment.repository.CommentRepository;
+import com.yahodadev.studyboard.common.dto.PageResponseDTO;
 import com.yahodadev.studyboard.common.error.BusinessException;
 import com.yahodadev.studyboard.common.error.ErrorCode;
 import com.yahodadev.studyboard.member.entity.Member;
@@ -12,6 +13,10 @@ import com.yahodadev.studyboard.member.repository.MemberRepository;
 import com.yahodadev.studyboard.post.entity.Post;
 import com.yahodadev.studyboard.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +50,6 @@ public class CommentService {
     }
 
 
-
     public Comment submit(Long postId, CommentReqDTO request) {
         Post post = getPostById(postId);
         Member member = getMemberById(request.getAuthorId());
@@ -74,5 +78,19 @@ public class CommentService {
         commentRepository.modify(commentId, request.getBody(), LocalDateTime.now());
 
         return CommentRespDTO.from(getCommentById(commentId));
+    }
+
+    public PageResponseDTO<CommentRespDTO> findComments(Long postId, Pageable pageable) {
+        Post post = getPostById(postId);
+
+        Pageable pageRequest = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt", "id")
+        );
+
+        Page<CommentRespDTO> comments = commentRepository.findCommentPage(postId, pageRequest);
+
+        return PageResponseDTO.from(comments);
     }
 }

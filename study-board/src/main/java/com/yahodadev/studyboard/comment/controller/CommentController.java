@@ -5,8 +5,11 @@ import com.yahodadev.studyboard.comment.dto.CommentReqDTO;
 import com.yahodadev.studyboard.comment.dto.CommentRespDTO;
 import com.yahodadev.studyboard.comment.service.CommentService;
 import com.yahodadev.studyboard.common.dto.ApiResponse;
+import com.yahodadev.studyboard.common.dto.PageResponseDTO;
 import com.yahodadev.studyboard.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,23 @@ public class CommentController {
                         HttpStatus.OK,
                         "댓글이 등록되었습니다.",
                         resp
+                )
+        );
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<ApiResponse<PageResponseDTO<?>>> findComments(
+            @PathVariable Long postId,
+            @PageableDefault(size = 10)Pageable pageable
+            ) {
+
+        PageResponseDTO<CommentRespDTO> commentPage = commentService.findComments(postId, pageable);
+
+        return ResponseEntity.ok().body(
+                ApiResponse.of(
+                        HttpStatus.OK,
+                        "댓글 조회 완료.",
+                        commentPage
                 )
         );
     }
