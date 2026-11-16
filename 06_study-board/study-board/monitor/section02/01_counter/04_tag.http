@@ -27,11 +27,11 @@ Content-Type: application/json
 ### COUNT 는 모든 분류를 합친 값이다.
 ### availableTags 에 category 가 생겼고, values 에 Spring Boot 와 JPA 가 들어 있다.
 ### 3. 전체 등록 수 조회
-GET {{baseUrl}}/metrics/study.post.created
+GET {{baseUrl}}/metrics/study.post.creation.by.category
 Accept: application/json
 
 ### 4. JPA 분류의 등록 수만 조회
-GET {{baseUrl}}/metrics/study.post.created?tag=category:JPA
+GET {{baseUrl}}/metrics/study.post.creation.by.category?tag=category:JPA
 Accept: application/json
 
 ### 5. 프로메테우스 형식에서 확인

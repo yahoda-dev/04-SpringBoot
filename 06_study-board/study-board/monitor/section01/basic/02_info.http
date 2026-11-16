@@ -1,5 +1,7 @@
 @baseUrl = http://localhost:8080/actuator
 
+# 개발자가 등록한 서버의 이름, 버전 등의 내용을 출력해주는 요청
+
 ### 서버의 기본정보
 GET {{baseUrl}}/info
 Accept: application/json

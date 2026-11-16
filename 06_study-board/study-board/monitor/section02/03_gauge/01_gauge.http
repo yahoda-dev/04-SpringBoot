@@ -1,6 +1,9 @@
 @baseUrl = http://localhost:8080/actuator
 @apiBaseUrl = http://localhost:8080
 
+### 0.
+GET {{apiBaseUrl}}/api/posts
+
 ### 1. 컴퓨터 전체의 CPU 사용률 조회
 GET {{baseUrl}}/metrics/system.cpu.usage
 Accept: application/json

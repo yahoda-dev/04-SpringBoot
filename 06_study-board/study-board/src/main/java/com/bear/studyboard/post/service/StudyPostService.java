@@ -7,6 +7,9 @@ import com.bear.studyboard.common.error.BusinessException;
 import com.bear.studyboard.common.error.ErrorCode;
 import com.bear.studyboard.member.entity.Member;
 import com.bear.studyboard.member.service.MemberService;
+import com.bear.studyboard.monitoring.section02.counter.PostCategoryCounter;
+import com.bear.studyboard.monitoring.section02.counter.PostCreatedCounter;
+import com.bear.studyboard.monitoring.section02.summary.PostBodyLengthSummary;
 import com.bear.studyboard.post.dto.CreatePostRequestDTO;
 import com.bear.studyboard.post.dto.PostDetailResponseDTO;
 import com.bear.studyboard.post.dto.PostListItemResponseDTO;
@@ -31,6 +34,10 @@ public class StudyPostService {
     private final StudyPostRepository studyPostRepository;
     private final MemberService memberService;
     private final CategoryService categoryService;
+    // metric 조회용 카운터
+    private final PostCreatedCounter postCreatedCounter;
+    private final PostCategoryCounter postCategoryCounter;
+    private final PostBodyLengthSummary postBodyLengthSummary;
 
     @Transactional
     public PostDetailResponseDTO createPost(CreatePostRequestDTO request) {
@@ -43,6 +50,15 @@ public class StudyPostService {
                 request.getReferenceUrl(), currentDateTime());
 
         StudyPost savedPost = studyPostRepository.save(post);
+
+        // 등록된 게시글의 본문 글자수를 기록
+        postBodyLengthSummary.record(savedPost.getBody());
+
+        // 저장에 성공하면 카운트 1 증가
+        postCreatedCounter.increase();
+
+        // 해당 분류의 게시글 등록 카운트 1 증가
+        postCategoryCounter.increase(savedPost.getCategory().getName());
 
         return PostDetailResponseDTO.from(savedPost);
     }

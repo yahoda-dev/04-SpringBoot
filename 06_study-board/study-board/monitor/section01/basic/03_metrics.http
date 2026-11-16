@@ -32,3 +32,7 @@ Accept: application/json
 ### 6. 게시글 단건 조회 경로에서 발생한 404 메트릭 조회
 GET {{baseUrl}}/metrics/http.server.requests?tag=uri:/api/posts/{postId}&tag=status:404
 Accept: application/json
+
+### 6. 게시글 단건 조회 경로에서 발생한 404 메트릭 조회
+GET {{baseUrl}}/metrics/http.server.requests?tag=uri:/api/posts&tag=status:200
+Accept: application/json

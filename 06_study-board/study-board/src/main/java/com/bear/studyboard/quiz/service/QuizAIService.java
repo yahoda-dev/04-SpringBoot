@@ -5,6 +5,7 @@ import com.bear.studyboard.common.error.ErrorCode;
 import com.bear.studyboard.post.dto.PostDetailResponseDTO;
 import com.bear.studyboard.post.service.StudyPostService;
 import com.bear.studyboard.quiz.dto.*;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -40,6 +41,10 @@ public class QuizAIService {
         this.quizAiClient = quizAiClient;
     }
 
+    @Timed(
+            value = "study.quiz.generate",
+            description = "AI 문제 생성에 걸린 시간"
+    )
     public List<QuizResponseDTO> generateQuizzes(long postId, Integer requestCount) {
 
         // 검증
