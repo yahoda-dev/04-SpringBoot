@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:8080/actuator
+@apiBaseUrl = http://localhost:8080
+
+### 1. 컴퓨터 전체의 CPU 사용률 조회
+GET {{baseUrl}}/metrics/system.cpu.usage
+Accept: application/json
+
+### 2. CPU 사용률 다시 조회 (여러 번 실행해서 값이 오르내리는지 확인)
+GET {{baseUrl}}/metrics/system.cpu.usage
+Accept: application/json
+
+### 3. 사용 중인 메모리 조회 (참고)
+GET {{baseUrl}}/metrics/jvm.memory.used
+Accept: application/json
+
+### 4. 사용 중인 DB 커넥션 수 조회
+GET {{baseUrl}}/metrics/hikaricp.connections.active
+Accept: application/json

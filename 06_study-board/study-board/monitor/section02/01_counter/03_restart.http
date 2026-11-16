@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:8080/actuator
+
+### 1. 재시작 후 지표 조회
+GET {{baseUrl}}/metrics/study.post.created
+Accept: application/json

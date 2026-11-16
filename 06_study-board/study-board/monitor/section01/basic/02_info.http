@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:8080/actuator
+
+### 서버의 기본정보
+GET {{baseUrl}}/info
+Accept: application/json

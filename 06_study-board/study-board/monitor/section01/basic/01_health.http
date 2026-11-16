@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:8080/actuator
+
+### 노출된 Actuator API 목록
+GET {{baseUrl}}
+Accept: application/json
+
+### 애플리케이션 상태
+GET {{baseUrl}}/health
+Accept: application/json
+
+### Liveness 상태
+GET {{baseUrl}}/health/liveness
+Accept: application/json
+
+### Readiness 상태
+GET {{baseUrl}}/health/readiness
+Accept: application/json

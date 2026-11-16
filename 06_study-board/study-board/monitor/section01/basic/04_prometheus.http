@@ -1,0 +1,9 @@
+@apiBaseUrl = http://localhost:8080
+
+### 1. 프로메테우스 형식으로 지표 조회
+GET {{apiBaseUrl}}/actuator/prometheus
+Accept: text/plain
+
+### 2. 환경 설정 조회 (참고)
+GET {{apiBaseUrl}}/actuator/env
+Accept: application/json
